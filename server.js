@@ -13,7 +13,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const routes = require("../backend/routes/cryptoRoutes");
+const routes = require("./routes/cryptoRoutes");
 
 app.use("/api/v1", routes);
 
