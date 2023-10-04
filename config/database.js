@@ -12,7 +12,7 @@ const dbConnect = () => {
   mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
+  
   });
 
   const connection = mongoose.connection;
