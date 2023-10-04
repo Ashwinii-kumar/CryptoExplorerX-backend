@@ -1,21 +1,30 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+
+// Load environment variables from .env file if not in production
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
-const uri=process.env.DATABASE_URL;
+// Define the MongoDB connection URI using an environment variable
+const uri = process.env.MONGODB_URI;
+
 const dbConnect = () => {
-  mongoose
-    .connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex:true,
-    })
-    .then(() => console.log("connection to db established"))
-    .catch((err) => {
-      console.log("error while connecting to db");
-      process.exit(1);
-    });
+  mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  });
+
+  const connection = mongoose.connection;
+
+  connection.once('open', () => {
+    console.log('MongoDB database connection established successfully');
+  });
+
+  connection.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
+  });
 };
 
+// Export the dbConnect function
 module.exports = dbConnect;
